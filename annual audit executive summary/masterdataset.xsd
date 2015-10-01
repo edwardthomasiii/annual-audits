@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="masterdataset" targetNamespace="http://tempuri.org/masterdataset.xsd" xmlns:mstns="http://tempuri.org/masterdataset.xsd" xmlns="http://tempuri.org/masterdataset.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="EDConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="EDConnectionString (Settings)" PropertyReference="ApplicationSettings.annual_audit_executive_summary.Properties.Settings.GlobalReference.Default.EDConnectionString" Provider="System.Data.Odbc" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="app_infoTableAdapter" GeneratorDataComponentClassName="app_infoTableAdapter" Name="app_info" UserDataComponentName="app_infoTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="EDConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        AI1.app_value AS Company, AI2.app_value AS Site
+FROM            Daemon.app_info AI1, Daemon.app_info AI2
+WHERE        (AI1.app_key = 'customer_owner') AND (AI2.app_key = 'customer_name')</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Company" DataSetColumn="Company" />
+              <Mapping SourceColumn="Site" DataSetColumn="Site" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="trans_histTableAdapter" GeneratorDataComponentClassName="trans_histTableAdapter" Name="trans_hist" UserDataComponentName="trans_histTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="EDConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        Daemon.batt_model.b_group_id AS "Group", COUNT(DISTINCT Daemon.trans_hist.th_arriv1_o_batt_id) AS diffBatteriesused, COUNT(DISTINCT Daemon.slot_info2.o_chgr_id) AS diffChargersUsed, 
+                         COUNT(DISTINCT Daemon.trans_hist.th_o_veh_id) AS diffvehiclesUsed, COUNT(DISTINCT Daemon.trans_hist.th_trans_id) AS transactions
+FROM            Daemon.veh_type, Daemon.veh_model, Daemon.veh_manuf, Daemon.veh_info, Daemon.batt_model, Daemon.batt_info, Daemon.trans_hist, Daemon.slot_info2
+WHERE        Daemon.veh_type.v_type = Daemon.veh_model.v_type AND Daemon.veh_type.v_manuf = Daemon.veh_manuf.v_manuf AND Daemon.veh_model.v_model = Daemon.veh_info.v_model AND 
+                         Daemon.veh_info.o_veh_id = Daemon.trans_hist.th_o_veh_id AND Daemon.batt_model.b_model = Daemon.batt_info.b_model AND Daemon.batt_info.o_batt_id = Daemon.trans_hist.th_arriv1_o_batt_id AND 
+                         Daemon.batt_info.o_batt_id = Daemon.trans_hist.th_arriv1_o_batt_id AND Daemon.trans_hist.th_arriv1_slot_index = Daemon.slot_info2.slot_index AND 
+                         Daemon.trans_hist.th_depart1_slot_index = Daemon.slot_info2.slot_index AND (Daemon.trans_hist.th_start1_ts BETWEEN ? AND ?)
+GROUP BY Daemon.batt_model.b_group_id
+ORDER BY "Group"</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="Param1" ColumnName="th_start1_ts" DataSourceName="trans_hist" DataTypeServer="timestamp" DbType="DateTime" Direction="Input" ParameterName="th_start1_ts" Precision="0" Scale="0" Size="0" SourceColumn="th_start1_ts" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="Param2" ColumnName="th_start1_ts" DataSourceName="trans_hist" DataTypeServer="timestamp" DbType="DateTime" Direction="Input" ParameterName="th_start1_ts1" Precision="0" Scale="0" Size="0" SourceColumn="th_start1_ts" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Group" DataSetColumn="Group" />
+              <Mapping SourceColumn="diffBatteriesused" DataSetColumn="diffBatteriesused" />
+              <Mapping SourceColumn="diffChargersUsed" DataSetColumn="diffChargersUsed" />
+              <Mapping SourceColumn="diffvehiclesUsed" DataSetColumn="diffvehiclesUsed" />
+              <Mapping SourceColumn="transactions" DataSetColumn="transactions" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="onhandtableTableAdapter" GeneratorDataComponentClassName="onhandtableTableAdapter" Name="onhandtable" UserDataComponentName="onhandtableTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="EDConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        Daemon.veh_model.v_group_id, Daemon.batt_grp.group_desc, COUNT(DISTINCT Daemon.batt_info.o_batt_id) AS availablebatteries, COUNT(DISTINCT Daemon.chgr_info.o_chgr_id) AS availablechargers, 
+                         COUNT(DISTINCT Daemon.slot_info2.slot) AS availableSlots, COUNT(DISTINCT Daemon.veh_info.o_veh_id) AS availablevehicles
+FROM            Daemon.slot_info2, Daemon.chgr_info, Daemon.veh_model, Daemon.veh_info, Daemon.batt_grp, Daemon.batt_model, Daemon.batt_info
+WHERE        Daemon.slot_info2.o_chgr_id = Daemon.chgr_info.o_chgr_id AND Daemon.slot_info2.group_id_mask = Daemon.batt_grp.group_id AND Daemon.veh_model.v_model = Daemon.veh_info.v_model AND 
+                         Daemon.veh_model.v_group_id = Daemon.batt_grp.group_id AND Daemon.batt_grp.group_id = Daemon.batt_model.b_group_id AND Daemon.batt_model.b_model = Daemon.batt_info.b_model AND 
+                         (Daemon.batt_info.b_stat_ts &lt;= ?) AND (Daemon.batt_info.b_avail_cd = 1) AND (Daemon.chgr_info.c_avail_cd = 1) AND (Daemon.slot_info2.s_avail_cd = 1) AND (Daemon.veh_info.v_avail_cd = 1)
+GROUP BY Daemon.batt_grp.group_desc, Daemon.batt_grp.group_id, Daemon.veh_model.v_group_id
+ORDER BY Daemon.batt_grp.group_id</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="Param1" ColumnName="b_stat_ts" DataSourceName="batt_info" DataTypeServer="timestamp" DbType="DateTime" Direction="Input" ParameterName="b_stat_ts" Precision="0" Scale="0" Size="0" SourceColumn="b_stat_ts" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="group_desc" DataSetColumn="group_desc" />
+              <Mapping SourceColumn="availablebatteries" DataSetColumn="availablebatteries" />
+              <Mapping SourceColumn="availablechargers" DataSetColumn="availablechargers" />
+              <Mapping SourceColumn="availableSlots" DataSetColumn="availableSlots" />
+              <Mapping SourceColumn="availablevehicles" DataSetColumn="availablevehicles" />
+              <Mapping SourceColumn="v_group_id" DataSetColumn="v_group_id" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="transperdayTableAdapter" GeneratorDataComponentClassName="transperdayTableAdapter" Name="transperday" UserDataComponentName="transperdayTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="EDConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        COUNT(DISTINCT Daemon.trans_hist.th_trans_id) AS transactions, Daemon.batt_model.b_group_id AS "group", "date"(Daemon.trans_hist.th_start1_ts) AS "Date", "HOUR"(Daemon.trans_hist.th_start1_ts) 
+                         AS "hour", "MINUTE"(Daemon.trans_hist.th_start1_ts) AS "Minute", COUNT("date"(Daemon.trans_hist.th_start1_ts)) AS datecount, COUNT("HOUR"(Daemon.trans_hist.th_start1_ts)) AS hourcount, 
+                         COUNT("MINUTE"(Daemon.trans_hist.th_start1_ts)) AS minutecount
+FROM            Daemon.trans_hist, Daemon.batt_info, Daemon.batt_model
+WHERE        Daemon.trans_hist.th_arriv1_o_batt_id = Daemon.batt_info.o_batt_id AND Daemon.batt_info.b_model = Daemon.batt_model.b_model
+GROUP BY "date"(Daemon.trans_hist.th_start1_ts), Daemon.batt_model.b_group_id, Daemon.trans_hist.th_start1_ts, "HOUR"(Daemon.trans_hist.th_start1_ts), "MINUTE"(Daemon.trans_hist.th_start1_ts)
+HAVING        (Daemon.trans_hist.th_start1_ts BETWEEN ? AND ?)
+ORDER BY COUNT("date"(Daemon.trans_hist.th_start1_ts)), "Date", "group"</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="Param1" ColumnName="th_start1_ts" DataSourceName="trans_hist" DataTypeServer="timestamp" DbType="DateTime" Direction="Input" ParameterName="th_start1_ts" Precision="0" Scale="0" Size="0" SourceColumn="th_start1_ts" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="Param2" ColumnName="th_start1_ts" DataSourceName="trans_hist" DataTypeServer="timestamp" DbType="DateTime" Direction="Input" ParameterName="th_start1_ts1" Precision="0" Scale="0" Size="0" SourceColumn="th_start1_ts" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="group" DataSetColumn="group" />
+              <Mapping SourceColumn="transactions" DataSetColumn="transactions" />
+              <Mapping SourceColumn="Date" DataSetColumn="Date" />
+              <Mapping SourceColumn="hour" DataSetColumn="hour" />
+              <Mapping SourceColumn="Minute" DataSetColumn="Minute" />
+              <Mapping SourceColumn="datecount" DataSetColumn="datecount" />
+              <Mapping SourceColumn="hourcount" DataSetColumn="hourcount" />
+              <Mapping SourceColumn="minutecount" DataSetColumn="minutecount" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="batterystatusTableAdapter" GeneratorDataComponentClassName="batterystatusTableAdapter" Name="batterystatus" UserDataComponentName="batterystatusTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="EDConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        Daemon.batt_model.b_group_id AS groupReady, Daemon.trans_hist.th_trans_id
+FROM            Daemon.batt_model, Daemon.batt_grp, Daemon.batt_info, Daemon.trans_hist, Daemon.batt_hist
+WHERE        Daemon.batt_model.b_group_id = Daemon.batt_grp.group_id AND Daemon.batt_model.b_model = Daemon.batt_info.b_model AND Daemon.batt_info.o_batt_id = Daemon.trans_hist.th_depart1_o_batt_id
+GROUP BY Daemon.batt_model.b_group_id, Daemon.trans_hist.th_start1_ts, Daemon.trans_hist.th_trans_id
+HAVING        (Daemon.trans_hist.th_start1_ts BETWEEN ? AND ?)
+ORDER BY groupReady</CommandText>
+                    <Parameters>
+                      <Parameter AllowDbNull="false" AutogeneratedName="Param1" ColumnName="th_start1_ts" DataSourceName="trans_hist" DataTypeServer="timestamp" DbType="DateTime" Direction="Input" ParameterName="th_start1_ts" Precision="0" Scale="0" Size="0" SourceColumn="th_start1_ts" SourceColumnNullMapping="false" SourceVersion="Current" />
+                      <Parameter AllowDbNull="false" AutogeneratedName="Param2" ColumnName="th_start1_ts" DataSourceName="trans_hist" DataTypeServer="timestamp" DbType="DateTime" Direction="Input" ParameterName="th_start1_ts1" Precision="0" Scale="0" Size="0" SourceColumn="th_start1_ts" SourceColumnNullMapping="false" SourceVersion="Current" />
+                    </Parameters>
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="groupReady" DataSetColumn="groupReady" />
+              <Mapping SourceColumn="th_trans_id" DataSetColumn="th_trans_id" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="masterdataset" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="masterdataset" msprop:Generator_UserDSName="masterdataset">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="app_info" msprop:Generator_TableClassName="app_infoDataTable" msprop:Generator_TableVarName="tableapp_info" msprop:Generator_TablePropName="app_info" msprop:Generator_RowDeletingName="app_infoRowDeleting" msprop:Generator_RowChangingName="app_infoRowChanging" msprop:Generator_RowEvHandlerName="app_infoRowChangeEventHandler" msprop:Generator_RowDeletedName="app_infoRowDeleted" msprop:Generator_UserTableName="app_info" msprop:Generator_RowChangedName="app_infoRowChanged" msprop:Generator_RowEvArgName="app_infoRowChangeEvent" msprop:Generator_RowClassName="app_infoRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Company" msprop:Generator_ColumnVarNameInTable="columnCompany" msprop:Generator_ColumnPropNameInRow="Company" msprop:Generator_ColumnPropNameInTable="CompanyColumn" msprop:Generator_UserColumnName="Company" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="256" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Site" msprop:Generator_ColumnVarNameInTable="columnSite" msprop:Generator_ColumnPropNameInRow="Site" msprop:Generator_ColumnPropNameInTable="SiteColumn" msprop:Generator_UserColumnName="Site" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="256" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="trans_hist" msprop:Generator_TableClassName="trans_histDataTable" msprop:Generator_TableVarName="tabletrans_hist" msprop:Generator_TablePropName="trans_hist" msprop:Generator_RowDeletingName="trans_histRowDeleting" msprop:Generator_RowChangingName="trans_histRowChanging" msprop:Generator_RowEvHandlerName="trans_histRowChangeEventHandler" msprop:Generator_RowDeletedName="trans_histRowDeleted" msprop:Generator_UserTableName="trans_hist" msprop:Generator_RowChangedName="trans_histRowChanged" msprop:Generator_RowEvArgName="trans_histRowChangeEvent" msprop:Generator_RowClassName="trans_histRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Group" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnGroup" msprop:Generator_ColumnPropNameInRow="Group" msprop:Generator_ColumnPropNameInTable="GroupColumn" msprop:Generator_UserColumnName="Group" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="diffBatteriesused" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columndiffBatteriesused" msprop:Generator_ColumnPropNameInRow="diffBatteriesused" msprop:Generator_ColumnPropNameInTable="diffBatteriesusedColumn" msprop:Generator_UserColumnName="diffBatteriesused" type="xs:int" minOccurs="0" />
+              <xs:element name="diffChargersUsed" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columndiffChargersUsed" msprop:Generator_ColumnPropNameInRow="diffChargersUsed" msprop:Generator_ColumnPropNameInTable="diffChargersUsedColumn" msprop:Generator_UserColumnName="diffChargersUsed" type="xs:int" minOccurs="0" />
+              <xs:element name="diffvehiclesUsed" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columndiffvehiclesUsed" msprop:Generator_ColumnPropNameInRow="diffvehiclesUsed" msprop:Generator_ColumnPropNameInTable="diffvehiclesUsedColumn" msprop:Generator_UserColumnName="diffvehiclesUsed" type="xs:int" minOccurs="0" />
+              <xs:element name="transactions" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columntransactions" msprop:Generator_ColumnPropNameInRow="transactions" msprop:Generator_ColumnPropNameInTable="transactionsColumn" msprop:Generator_UserColumnName="transactions" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="onhandtable" msprop:Generator_TableClassName="onhandtableDataTable" msprop:Generator_TableVarName="tableonhandtable" msprop:Generator_RowChangedName="onhandtableRowChanged" msprop:Generator_TablePropName="onhandtable" msprop:Generator_RowDeletingName="onhandtableRowDeleting" msprop:Generator_RowChangingName="onhandtableRowChanging" msprop:Generator_RowEvHandlerName="onhandtableRowChangeEventHandler" msprop:Generator_RowDeletedName="onhandtableRowDeleted" msprop:Generator_RowClassName="onhandtableRow" msprop:Generator_UserTableName="onhandtable" msprop:Generator_RowEvArgName="onhandtableRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="group_desc" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columngroup_desc" msprop:Generator_ColumnPropNameInRow="group_desc" msprop:Generator_ColumnPropNameInTable="group_descColumn" msprop:Generator_UserColumnName="group_desc" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="128" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="availablebatteries" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnavailablebatteries" msprop:Generator_ColumnPropNameInRow="availablebatteries" msprop:Generator_ColumnPropNameInTable="availablebatteriesColumn" msprop:Generator_UserColumnName="availablebatteries" type="xs:int" minOccurs="0" />
+              <xs:element name="availablechargers" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnavailablechargers" msprop:Generator_ColumnPropNameInRow="availablechargers" msprop:Generator_ColumnPropNameInTable="availablechargersColumn" msprop:Generator_UserColumnName="availablechargers" type="xs:int" minOccurs="0" />
+              <xs:element name="availableSlots" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnavailableSlots" msprop:Generator_ColumnPropNameInRow="availableSlots" msprop:Generator_ColumnPropNameInTable="availableSlotsColumn" msprop:Generator_UserColumnName="availableSlots" type="xs:int" minOccurs="0" />
+              <xs:element name="availablevehicles" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnavailablevehicles" msprop:Generator_ColumnPropNameInRow="availablevehicles" msprop:Generator_ColumnPropNameInTable="availablevehiclesColumn" msprop:Generator_UserColumnName="availablevehicles" type="xs:int" minOccurs="0" />
+              <xs:element name="v_group_id" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnv_group_id" msprop:Generator_ColumnPropNameInRow="v_group_id" msprop:Generator_ColumnPropNameInTable="v_group_idColumn" msprop:Generator_UserColumnName="v_group_id" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="transperday" msprop:Generator_TableClassName="transperdayDataTable" msprop:Generator_TableVarName="tabletransperday" msprop:Generator_RowChangedName="transperdayRowChanged" msprop:Generator_TablePropName="transperday" msprop:Generator_RowDeletingName="transperdayRowDeleting" msprop:Generator_RowChangingName="transperdayRowChanging" msprop:Generator_RowEvHandlerName="transperdayRowChangeEventHandler" msprop:Generator_RowDeletedName="transperdayRowDeleted" msprop:Generator_RowClassName="transperdayRow" msprop:Generator_UserTableName="transperday" msprop:Generator_RowEvArgName="transperdayRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="group" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columngroup" msprop:Generator_ColumnPropNameInRow="group" msprop:Generator_ColumnPropNameInTable="groupColumn" msprop:Generator_UserColumnName="group" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="transactions" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columntransactions" msprop:Generator_ColumnPropNameInRow="transactions" msprop:Generator_ColumnPropNameInTable="transactionsColumn" msprop:Generator_UserColumnName="transactions" type="xs:int" minOccurs="0" />
+              <xs:element name="Date" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnDate" msprop:Generator_ColumnPropNameInRow="Date" msprop:Generator_ColumnPropNameInTable="DateColumn" msprop:Generator_UserColumnName="Date" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="hour" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnhour" msprop:Generator_ColumnPropNameInRow="hour" msprop:Generator_ColumnPropNameInTable="hourColumn" msprop:Generator_UserColumnName="hour" type="xs:short" minOccurs="0" />
+              <xs:element name="Minute" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnMinute" msprop:Generator_ColumnPropNameInRow="Minute" msprop:Generator_ColumnPropNameInTable="MinuteColumn" msprop:Generator_UserColumnName="Minute" type="xs:short" minOccurs="0" />
+              <xs:element name="datecount" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columndatecount" msprop:Generator_ColumnPropNameInRow="datecount" msprop:Generator_ColumnPropNameInTable="datecountColumn" msprop:Generator_UserColumnName="datecount" type="xs:int" minOccurs="0" />
+              <xs:element name="hourcount" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnhourcount" msprop:Generator_ColumnPropNameInRow="hourcount" msprop:Generator_ColumnPropNameInTable="hourcountColumn" msprop:Generator_UserColumnName="hourcount" type="xs:int" minOccurs="0" />
+              <xs:element name="minutecount" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnminutecount" msprop:Generator_ColumnPropNameInRow="minutecount" msprop:Generator_ColumnPropNameInTable="minutecountColumn" msprop:Generator_UserColumnName="minutecount" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="batterystatus" msprop:Generator_TableClassName="batterystatusDataTable" msprop:Generator_TableVarName="tablebatterystatus" msprop:Generator_RowChangedName="batterystatusRowChanged" msprop:Generator_TablePropName="batterystatus" msprop:Generator_RowDeletingName="batterystatusRowDeleting" msprop:Generator_RowChangingName="batterystatusRowChanging" msprop:Generator_RowEvHandlerName="batterystatusRowChangeEventHandler" msprop:Generator_RowDeletedName="batterystatusRowDeleted" msprop:Generator_RowClassName="batterystatusRow" msprop:Generator_UserTableName="batterystatus" msprop:Generator_RowEvArgName="batterystatusRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="groupReady" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columngroupReady" msprop:Generator_ColumnPropNameInRow="groupReady" msprop:Generator_ColumnPropNameInTable="groupReadyColumn" msprop:Generator_UserColumnName="groupReady" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="1" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="th_trans_id" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnth_trans_id" msprop:Generator_ColumnPropNameInRow="th_trans_id" msprop:Generator_ColumnPropNameInTable="th_trans_idColumn" msprop:Generator_UserColumnName="th_trans_id" type="xs:long" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1">
+      <xs:selector xpath=".//mstns:batterystatus" />
+      <xs:field xpath="mstns:groupReady" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
