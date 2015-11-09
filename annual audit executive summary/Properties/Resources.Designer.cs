@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 
 namespace annual_audit_executive_summary.Properties {
+    using System;
     
     
     /// <summary>
@@ -37,7 +38,7 @@ namespace annual_audit_executive_summary.Properties {
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
-                if ((resourceMan == null)) {
+                if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("annual_audit_executive_summary.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
@@ -56,6 +57,26 @@ namespace annual_audit_executive_summary.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mtclogo {
+            get {
+                object obj = ResourceManager.GetObject("mtclogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap smallmtclogo {
+            get {
+                object obj = ResourceManager.GetObject("smallmtclogo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }
